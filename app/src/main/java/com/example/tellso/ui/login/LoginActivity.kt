@@ -3,8 +3,8 @@ package com.example.tellso.ui.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.tellso.customViews.EmailEditText
 import com.example.tellso.databinding.ActivityLoginBinding
+import com.example.tellso.ui.main.MainActivity
 import com.example.tellso.ui.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -23,6 +23,11 @@ class LoginActivity : AppCompatActivity() {
         binding.apply {
             btnSignup.setOnClickListener {
                 val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+                startActivity(intent)
+            }
+
+            btnRegister.setOnClickListener {
+                val intent = Intent(this@LoginActivity, MainActivity::class.java)
                 startActivity(intent)
             }
         }
