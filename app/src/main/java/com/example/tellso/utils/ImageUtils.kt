@@ -16,6 +16,7 @@ import java.util.*
 
 private const val FILENAME_FORMAT = "dd-MMM-yyyy"
 
+
 private const val MAXIMAL_SIZE = 1000000 // 1 MB
 
 val timeStamp: String = SimpleDateFormat(
