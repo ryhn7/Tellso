@@ -1,10 +1,9 @@
 package com.example.tellso.ui.create
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.tellso.databinding.FragmentCreateStoryBinding
@@ -28,10 +27,13 @@ class CreateStoryFragment : Fragment() {
         _binding = FragmentCreateStoryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textStory
-        createStoryViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
+
+
+//        val textView: TextView = binding.textStory
+//        createStoryViewModel.text.observe(viewLifecycleOwner) {
+//            textView.text = it
+//        }
         return root
     }
 

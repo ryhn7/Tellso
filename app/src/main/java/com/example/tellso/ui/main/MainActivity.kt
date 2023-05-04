@@ -29,7 +29,9 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
-        val navController = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main)!!.findNavController()
+        val navController =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main)!!
+                .findNavController()
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
@@ -39,6 +41,15 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+//        check the current destination of the navController and println it
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when(destination.id) {
+                R.id.create_story -> {
+                    supportActionBar?.hide()
+                } else -> supportActionBar?.show()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -55,4 +66,5 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
+
 }
