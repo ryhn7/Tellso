@@ -22,4 +22,9 @@
     <string name="desc">What\'s on your mind?</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
+    <string name="story_username">Name</string>
+    <string name="story_pict">Story Pict</string>
+    <string name="dummy_description">Lorem ipsum dolor sit amet. Qui sapiente molestias sit reiciendis omnis sit ratione debitis qui quam reiciendis vel accusamus aliquid. Id fugiat voluptatum sed aliquid saepe eum neque deserunt in aspernatur incidunt id fuga fugit. Quo suscipit veritatis et corporis explicabo et dolor amet ut iste veritatis quo dolorum internos id corporis quis.</string>
+    <string name="dummy_date">MARCH 7</string>
+    <string name="data_not_found">Oops, no data found</string>
 </resources>
