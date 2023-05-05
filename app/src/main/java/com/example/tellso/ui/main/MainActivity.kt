@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
@@ -13,10 +14,15 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.tellso.R
 import com.example.tellso.databinding.ActivityMainBinding
+import com.example.tellso.ui.login.LoginActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private var token: String = ""
+    private val viewModel: MainVM by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +32,8 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarMain.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        token = intent.getStringExtra(EXTRA_TOKEN)!!
 
         val navView: BottomNavigationView = binding.navView
 
@@ -44,10 +52,18 @@ class MainActivity : AppCompatActivity() {
 
 //        check the current destination of the navController and println it
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            when(destination.id) {
+            when (destination.id) {
                 R.id.create_story -> {
                     supportActionBar?.hide()
-                } else -> supportActionBar?.show()
+                }
+                R.id.logout -> {
+                    viewModel.saveAuthToken("")
+                    Intent(this, LoginActivity::class.java).also {
+                        startActivity(it)
+                        finish()
+                    }
+                }
+                else -> supportActionBar?.show()
             }
         }
     }
