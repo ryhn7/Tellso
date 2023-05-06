@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -36,23 +37,12 @@ class MainActivity : AppCompatActivity() {
 
         token = intent.getStringExtra(EXTRA_TOKEN)!!
 
-        val homeFragment = HomeFragment().apply {
-            arguments = Bundle().apply {
-                putString(HomeFragment.ARG_TOKEN, token)
-            }
-        }
-
-//        val nav = supportFragmentManager.beginTransaction()
-//            .replace(R.id.nav_host_fragment_activity_main, homeFragment)
-//            .commitNow()
-
         val navView: BottomNavigationView = binding.navView
 
         val navController =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main)!!
                 .findNavController()
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home, R.id.create_story, R.id.logout
@@ -61,7 +51,6 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-//        check the current destination of the navController and println it
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.create_story -> {
@@ -77,6 +66,11 @@ class MainActivity : AppCompatActivity() {
                 else -> supportActionBar?.show()
             }
         }
+
+//        send token to home fragment
+        navController.navigate(R.id.navigation_home, Bundle().apply {
+            putString(HomeFragment.ARG_TOKEN, token)
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -15,10 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tellso.adapter.StoriesResponseAdapter
 import com.example.tellso.data.remote.response.Story
 import com.example.tellso.databinding.FragmentHomeBinding
-import com.example.tellso.ui.main.MainActivity
 import com.example.tellso.utils.animateVisibility
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -26,7 +24,7 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private var token: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLWo3QjRmd052eng2Wkx6MU8iLCJpYXQiOjE2ODMzNzI1NDZ9.fIIY5XxpV12ABRPZrCYFi210DZ0kRJ_TlijY06XOLQM"
+    private var token: String = ""
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var listAdapter: StoriesResponseAdapter
