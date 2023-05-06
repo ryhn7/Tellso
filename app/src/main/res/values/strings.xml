@@ -30,4 +30,6 @@
     <string name="error_message">Sorry, there was a problem with your request </string>
     <string name="register_success">Register success</string>
     <string name="login_success">Login success</string>
+    <string name="profile_user">profile_user</string>
+    <string name="detail_toolbar_title">%s\'s story</string>
 </resources>

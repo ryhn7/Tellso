@@ -14,6 +14,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.tellso.R
 import com.example.tellso.databinding.ActivityMainBinding
+import com.example.tellso.ui.home.HomeFragment
 import com.example.tellso.ui.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,6 +35,16 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         token = intent.getStringExtra(EXTRA_TOKEN)!!
+
+        val homeFragment = HomeFragment().apply {
+            arguments = Bundle().apply {
+                putString(HomeFragment.ARG_TOKEN, token)
+            }
+        }
+
+//        val nav = supportFragmentManager.beginTransaction()
+//            .replace(R.id.nav_host_fragment_activity_main, homeFragment)
+//            .commitNow()
 
         val navView: BottomNavigationView = binding.navView
 
@@ -71,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.main, menu)
-        return true;
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

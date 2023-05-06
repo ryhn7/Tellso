@@ -3,11 +3,17 @@ package com.example.tellso.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.tellso.data.StoryRepo
+import com.example.tellso.data.remote.response.StoriesResponse
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val storyRepo: StoryRepo
+) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
-    }
-    val text: LiveData<String> = _text
+    suspend fun getAllStories(token: String): Flow<Result<StoriesResponse>> =
+        storyRepo.getAllStories(token, null, null)
 }
