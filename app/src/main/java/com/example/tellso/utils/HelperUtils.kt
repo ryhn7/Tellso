@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.tellso.R
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.ZoneId

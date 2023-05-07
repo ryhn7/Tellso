@@ -6,7 +6,6 @@ import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -16,6 +15,7 @@ import com.example.tellso.R
 import com.example.tellso.databinding.ActivityMainBinding
 import com.example.tellso.ui.home.HomeFragment
 import com.example.tellso.ui.login.LoginActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -87,9 +87,9 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onDestroy() {
-        _binding = null
-        super.onDestroy()
+    override fun onBackPressed() {
+        // exit the app when the back button is pressed
+        finishAffinity()
     }
 
     companion object {

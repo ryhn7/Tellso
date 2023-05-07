@@ -14,8 +14,8 @@ import com.example.tellso.data.remote.response.Story
 import com.example.tellso.databinding.StoryItemBinding
 import com.example.tellso.ui.detail.DetailStoryActivity
 import com.example.tellso.ui.detail.DetailStoryActivity.Companion.EXTRA_DETAIL
-import com.example.tellso.utils.setImageFromUrl
 import com.example.tellso.utils.setDateFormat
+import com.example.tellso.utils.setImageFromUrl
 import dagger.hilt.android.internal.managers.FragmentComponentManager
 
 class StoriesResponseAdapter :

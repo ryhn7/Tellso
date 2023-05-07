@@ -1,10 +1,10 @@
 package com.example.tellso.ui.register
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.tellso.R
 import com.example.tellso.databinding.ActivityRegisterBinding
@@ -99,10 +99,5 @@ class RegisterActivity : AppCompatActivity() {
                 viewLoading.animateVisibility(false)
             }
         }
-    }
-
-    override fun onDestroy() {
-        _binding = null
-        super.onDestroy()
     }
 }

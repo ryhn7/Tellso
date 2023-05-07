@@ -7,7 +7,9 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -21,8 +23,6 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils
 import com.example.tellso.R
 import com.example.tellso.databinding.FragmentCreateStoryBinding
-import com.example.tellso.ui.home.HomeFragment
-import com.example.tellso.ui.main.MainActivity
 import com.example.tellso.utils.animateVisibility
 import com.example.tellso.utils.reduceFileImage
 import com.example.tellso.utils.uriToFile

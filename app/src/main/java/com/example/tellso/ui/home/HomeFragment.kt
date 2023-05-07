@@ -52,7 +52,6 @@ class HomeFragment : Fragment() {
             println("HomeFragment token: $token")
         }
 
-        viewModel.saveAuthToken(token)
 
         return binding.root
     }
