@@ -29,27 +29,6 @@ fun createTempFile(context: Context): File {
     return File.createTempFile(timeStamp, ".jpg", storageDir)
 }
 
-fun createFile(application: Application): File {
-    val mediaDir = application.externalMediaDirs.firstOrNull()?.let {
-        File(it, application.resources.getString(R.string.app_name)).apply { mkdirs() }
-    }
-
-    val outputDirectory = if (
-        mediaDir != null && mediaDir.exists()
-    ) mediaDir else application.filesDir
-
-    return File(outputDirectory, "$timeStamp.jpg")
-}
-
-//create a function similar to rotateFile() but this time without isBackCamera parameter
-fun rotateFile(file: File) {
-    val matrix = Matrix()
-    val bitmap = BitmapFactory.decodeFile(file.path)
-    matrix.postRotate(90f)
-    val result = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-    result.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(file))
-}
-
 fun uriToFile(selectedImg: Uri, context: Context): File {
     val contentResolver: ContentResolver = context.contentResolver
     val myFile = createTempFile(context)

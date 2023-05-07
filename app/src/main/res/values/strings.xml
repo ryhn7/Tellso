@@ -32,4 +32,10 @@
     <string name="login_success">Login success</string>
     <string name="profile_user">profile_user</string>
     <string name="detail_toolbar_title">%s\'s story</string>
+    <string name="select_image">Select image from</string>
+    <string name="upload_image">upload image illustration</string>
+    <string name="empty_desc_error">Oops, this story is empty</string>
+    <string name="empty_img_error">Please select an image</string>
+    <string name="post_success">Your story has been posted</string>
+    <string name="post_failed">Your story failed to post</string>
 </resources>

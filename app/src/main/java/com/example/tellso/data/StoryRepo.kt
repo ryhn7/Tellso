@@ -1,5 +1,6 @@
 package com.example.tellso.data
 
+import com.example.tellso.data.remote.response.FileUploadResponse
 import com.example.tellso.data.remote.response.StoriesResponse
 import com.example.tellso.data.remote.retrofit.ApiService
 import kotlinx.coroutines.flow.Flow
@@ -31,7 +32,7 @@ class StoryRepo @Inject constructor(
         token: String,
         file: MultipartBody.Part,
         description: RequestBody
-    ): Flow<Result<StoriesResponse>> = flow {
+    ): Flow<Result<FileUploadResponse>> = flow {
         try {
             val bearerToken = generateToken(token)
             val response = apiService.uploadStory(bearerToken, file, description)

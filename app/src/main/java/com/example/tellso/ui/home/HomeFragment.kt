@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
         if (token.isEmpty()) {
             println("token is empty")
         } else {
-            println(token)
+            println("HomeFragment token: $token")
         }
 
         return binding.root

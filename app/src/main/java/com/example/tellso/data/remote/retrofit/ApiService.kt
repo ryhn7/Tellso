@@ -1,5 +1,6 @@
 package com.example.tellso.data.remote.retrofit
 
+import com.example.tellso.data.remote.response.FileUploadResponse
 import com.example.tellso.data.remote.response.LoginResponse
 import com.example.tellso.data.remote.response.RegisterResponse
 import com.example.tellso.data.remote.response.StoriesResponse
@@ -36,6 +37,6 @@ interface ApiService {
     suspend fun uploadStory(
         @Header("Authorization") token: String,
         @Part file: MultipartBody.Part,
-        @Part("description") description: RequestBody,
-    ): StoriesResponse
+        @Part("description") description: RequestBody
+    ): FileUploadResponse
 }

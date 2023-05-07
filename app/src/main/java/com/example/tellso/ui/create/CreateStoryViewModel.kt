@@ -1,11 +1,9 @@
 package com.example.tellso.ui.create
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.tellso.data.AuthRepo
 import com.example.tellso.data.StoryRepo
-import com.example.tellso.data.remote.response.StoriesResponse
+import com.example.tellso.data.remote.response.FileUploadResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
@@ -24,6 +22,6 @@ class CreateStoryViewModel @Inject constructor(
         token: String,
         file: MultipartBody.Part,
         description: RequestBody
-    ): Flow<Result<StoriesResponse>> =
+    ): Flow<Result<FileUploadResponse>> =
         storyRepo.uploadStory(token, file, description)
 }
