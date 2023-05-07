@@ -19,13 +19,15 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityRegisterBinding
+    private var _binding: ActivityRegisterBinding ? = null
+    private val binding get() = _binding!!
+
     private val viewModel: RegisterVM by viewModels()
     private var registerJob: Job = Job()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        _binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setActions()
@@ -97,5 +99,10 @@ class RegisterActivity : AppCompatActivity() {
                 viewLoading.animateVisibility(false)
             }
         }
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
     }
 }

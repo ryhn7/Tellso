@@ -14,6 +14,25 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Theme.Tellso.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="MyToolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="titleTextAppearance">@style/My_TextAppearance_Toolbar</item>
+    </style>
+
+    <style name="My_TextAppearance_Toolbar" parent="@style/TextAppearance.MaterialComponents.Subtitle1">
+        <item name="fontFamily">@font/smooth</item>
+        <item name="android:fontFamily">@font/smooth</item>
+    </style>
+
+    <style name="BottomNavigationViewTextStyle">
+        <item name="android:fontFamily">@font/segoe_regular</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_bg</item>
     </style>

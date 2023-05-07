@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -12,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tellso.R
 import com.example.tellso.adapter.StoriesResponseAdapter
 import com.example.tellso.data.remote.response.Story
 import com.example.tellso.databinding.FragmentHomeBinding
@@ -37,6 +40,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        (activity as AppCompatActivity).setSupportActionBar(binding.appBarMain.toolbar)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(true)
         arguments?.let {
             token = it.getString(ARG_TOKEN) ?: ""
         }
@@ -46,6 +51,8 @@ class HomeFragment : Fragment() {
         } else {
             println("HomeFragment token: $token")
         }
+
+        viewModel.saveAuthToken(token)
 
         return binding.root
     }
@@ -108,6 +115,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun setSwipeRefreshLayout() {
+        //            change color of refresh icon
+        binding.swipeRefresh.setColorSchemeColors(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.blue
+            )
+        )
+
         binding.swipeRefresh.setOnRefreshListener {
             getAllStories()
             binding.viewLoading.animateVisibility(false)

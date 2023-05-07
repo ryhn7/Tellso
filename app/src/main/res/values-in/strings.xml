@@ -14,7 +14,7 @@
     <string name="language">Bahasa</string>
     <string name="title_home">Beranda</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="add_story">Tambah Cerita</string>
+    <string name="add_story">Buat Cerita</string>
     <string name="logout">Keluar</string>
     <string name="create_story">Buat Cerita</string>
     <string name="post">POST</string>

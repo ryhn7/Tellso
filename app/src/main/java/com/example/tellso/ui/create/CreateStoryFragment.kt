@@ -47,9 +47,6 @@ class CreateStoryFragment : Fragment() {
     private var token: String = ""
 
     private val viewModel: CreateStoryViewModel by viewModels()
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onRequestPermissionsResult(
@@ -130,12 +127,8 @@ class CreateStoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentCreateStoryBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -260,6 +253,5 @@ class CreateStoryFragment : Fragment() {
     companion object {
         private val REQUIRED_PERMISSIONS = arrayOf(android.Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
-        const val ARG_TOKEN = "arg_token"
     }
 }

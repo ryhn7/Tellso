@@ -21,14 +21,16 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private var _binding: ActivityMainBinding ? = null
+    private val binding get() = _binding!!
+
     private var token: String = ""
     private val viewModel: MainVM by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setSupportActionBar(binding.appBarMain.toolbar)
@@ -62,10 +64,8 @@ class MainActivity : AppCompatActivity() {
                         finish()
                     }
                 }
-                else -> supportActionBar?.show()
             }
         }
-
 //        send token to home fragment
         navController.navigate(R.id.navigation_home, Bundle().apply {
             putString(HomeFragment.ARG_TOKEN, token)
@@ -85,6 +85,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return true
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
     }
 
     companion object {

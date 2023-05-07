@@ -14,10 +14,12 @@ import com.example.tellso.databinding.ActivityDetailStoryBinding
 import com.example.tellso.utils.setDateFormat
 
 class DetailStoryActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityDetailStoryBinding
+    private var _binding: ActivityDetailStoryBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailStoryBinding.inflate(layoutInflater)
+        _binding = ActivityDetailStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportPostponeEnterTransition()
 
@@ -71,6 +73,11 @@ class DetailStoryActivity : AppCompatActivity() {
                     .into(ivStoryImage)
             }
         }
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
     }
 
     companion object {

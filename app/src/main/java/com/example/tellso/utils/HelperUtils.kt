@@ -9,6 +9,8 @@ import com.bumptech.glide.Glide
 import com.example.tellso.R
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.ZoneId
 import java.util.*
 
 fun View.animateVisibility(isVisible: Boolean, duration: Long = 500) {
@@ -28,9 +30,14 @@ fun ImageView.setImageFromUrl(context: Context, url: String) {
 }
 
 fun TextView.setDateFormat(timestamp: String) {
-    val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
-    val date = sdf.parse(timestamp) as Date
+//    make sure the timestamp is in this format: "7 May 2023"
+    val instant = Instant.parse(timestamp)
+    val date = Date.from(instant)
 
-    val formattedDate = DateFormat.getDateInstance(DateFormat.FULL).format(date)
+    // format the date using the desired format
+    val sdf = SimpleDateFormat("dd MMMM yyyy",Locale.getDefault())
+    sdf.timeZone = TimeZone.getTimeZone(ZoneId.systemDefault())
+
+    val formattedDate = sdf.format(date)
     this.text = formattedDate
 }
