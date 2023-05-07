@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tellso</string>
+    <string name="wording_register">Daftar untuk melihat kisah-kisah inspiratif dari teman-teman Anda.</string>
+    <string name="fullname">Nama Lengkap</string>
+    <string name="email">Email</string>
+    <string name="password">Kata Sandi</string>
+    <string name="btn_signup">Daftar</string>
+    <string name="btn_login">Masuk</string>
+    <string name="have_an_account">Sudah punya akun?</string>
+    <string name="don_t_have_an_account">Belum punya akun?</string>
+    <string name="et_email_error_message">Email tidak valid</string>
+    <string name="et_password_error_message">Kata sandi minimal harus terdiri dari 8 karakter</string>
+    <string name="language">Bahasa</string>
+    <string name="title_home">Beranda</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="add_story">Tambah Cerita</string>
+    <string name="logout">Keluar</string>
+    <string name="create_story">Buat Cerita</string>
+    <string name="post">POST</string>
+    <string name="desc">Apa yang Anda pikirkan?</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="story_username">Nama</string>
+    <string name="story_pict">Gambar cerita</string>
+    <string name="dummy_description">Lorem ipsum dolor sit amet. Qui sapiente molestias sit reiciendis omnis sit ratione debitis qui quam reiciendis vel accusamus aliquid. Id fugiat voluptatum sed aliquid saepe eum neque deserunt in aspernatur incidunt id fuga fugit. Quo suscipit veritatis et corporis explicabo et dolor amet ut iste veritatis quo dolorum internos id corporis quis.</string>
+    <string name="dummy_date">MARCH 7</string>
+    <string name="data_not_found">Oops, data tidak ditemukan</string>
+    <string name="error_message">maaf, ada masalah dengan permintaan Anda </string>
+    <string name="register_success">Registrasi berhasil</string>
+    <string name="login_success">Login berhasil</string>
+    <string name="profile_user">profile_user</string>
+    <string name="detail_toolbar_title">Cerita %s\</string>
+    <string name="select_image">Pilih gambar</string>
+    <string name="upload_image">ilustrasi upload gambar</string>
+    <string name="empty_desc_error">Oops, cerita masih kosong</string>
+    <string name="empty_img_error">Silakan pilih gambar</string>
+    <string name="post_success">Cerita Anda telah diposting</string>
+    <string name="post_failed">Cerita Anda gagal diposting</string>
+</resources>

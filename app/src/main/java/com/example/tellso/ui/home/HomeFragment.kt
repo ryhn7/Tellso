@@ -59,7 +59,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun getAllStories() {
-        binding.progressBar.animateVisibility(true)
+        binding.viewLoading.animateVisibility(true)
         binding.swipeRefresh.isRefreshing = true
 
         lifecycleScope.launch {
@@ -74,7 +74,7 @@ class HomeFragment : Fragment() {
                             tvNotFound.animateVisibility(response.stories.isEmpty())
                             ivNotFound.animateVisibility(response.stories.isEmpty())
                             rvStories.animateVisibility(response.stories.isNotEmpty())
-                            progressBar.animateVisibility(false)
+                            viewLoading.animateVisibility(false)
                             swipeRefresh.isRefreshing = false
                         }
                     }
@@ -86,7 +86,7 @@ class HomeFragment : Fragment() {
                             tvNotFound.animateVisibility(true)
                             ivNotFound.animateVisibility(true)
                             rvStories.animateVisibility(false)
-                            progressBar.animateVisibility(false)
+                            viewLoading.animateVisibility(false)
                             swipeRefresh.isRefreshing = false
                         }
                     }
@@ -110,7 +110,7 @@ class HomeFragment : Fragment() {
     private fun setSwipeRefreshLayout() {
         binding.swipeRefresh.setOnRefreshListener {
             getAllStories()
-            binding.progressBar.animateVisibility(false)
+            binding.viewLoading.animateVisibility(false)
         }
 
     }

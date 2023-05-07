@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Tellso</string>
-    <string name="logo_front">Tellso</string>
     <string name="wording_register">Sign up to see inspiring stories from your friends.</string>
     <string name="fullname">Full Name</string>
     <string name="email">Email</string>
@@ -17,7 +16,6 @@
     <string name="add_story">Add Story</string>
     <string name="logout">Log out</string>
     <string name="create_story">Create Story</string>
-    <string name="title_notifications">tes</string>
     <string name="post">POST</string>
     <string name="desc">What\'s on your mind?</string>
     <string name="camera">Camera</string>
