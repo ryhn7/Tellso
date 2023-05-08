@@ -52,6 +52,17 @@ class RegisterActivity : AppCompatActivity() {
         val password = binding.passwordEditText.text.toString()
         setLoadingState(true)
 
+        if (password.length < 8) {
+            binding.btnRegister.isEnabled = false
+            Toast.makeText(
+                this@RegisterActivity,
+                getString(R.string.disable_btn),
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            binding.btnRegister.isEnabled = true
+        }
+
         lifecycleScope.launchWhenResumed {
             if (registerJob.isActive) {
                 registerJob.cancelChildren()

@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
-    private var _binding: ActivityLoginBinding ? = null
+    private var _binding: ActivityLoginBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: LoginVM by viewModels()
@@ -77,7 +77,11 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     result.onFailure {
-                        Snackbar.make(binding.root, getString(R.string.error_message), Snackbar.LENGTH_SHORT)
+                        Snackbar.make(
+                            binding.root,
+                            getString(R.string.error_message),
+                            Snackbar.LENGTH_SHORT
+                        )
                             .show()
                         setLoadingState(false)
                     }
@@ -101,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-//    will close the app when back button is pressed
+    //    will close the app when back button is pressed
     override fun onBackPressed() {
         super.onBackPressed()
         finishAffinity()

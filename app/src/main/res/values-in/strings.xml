@@ -37,4 +37,5 @@
     <string name="empty_img_error">Silakan pilih gambar</string>
     <string name="post_success">Cerita Anda telah diposting</string>
     <string name="post_failed">Cerita Anda gagal diposting</string>
+    <string name="disable_btn">Kata sandi minimal harus terdiri dari 8 karakter</string>
 </resources>

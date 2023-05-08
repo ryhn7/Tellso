@@ -36,4 +36,5 @@
     <string name="empty_img_error">Please select an image</string>
     <string name="post_success">Your story has been posted</string>
     <string name="post_failed">Your story failed to post</string>
+    <string name="disable_btn">Passwords must be at least 8 characters</string>
 </resources>
