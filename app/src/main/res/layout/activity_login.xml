@@ -69,13 +69,13 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.example.tellso.customViews.CustomButton
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/rounded_btn"
+        android:enabled="false"
         android:fontFamily="@font/segoe_bold"
         android:text="@string/btn_login"
         android:textAllCaps="false"

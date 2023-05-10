@@ -2,6 +2,8 @@ package com.example.tellso.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +33,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setActions()
+        binding.passwordEditText.addTextChangedListener(passwordWatcher)
     }
 
     private fun setActions() {
@@ -109,5 +112,19 @@ class LoginActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         finishAffinity()
+    }
+
+    private val passwordWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            binding.btnLogin.isEnabled = s != null && s.length >= 8
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            // Do nothing
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            // Do nothing
+        }
     }
 }
