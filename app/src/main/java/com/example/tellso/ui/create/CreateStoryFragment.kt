@@ -18,6 +18,7 @@ import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils
@@ -177,9 +178,10 @@ class CreateStoryFragment : Fragment() {
                 reqImgFile
             )
 
-            lifecycleScope.launchWhenStarted {
-                launch {
-                    viewModel.uploadStory(token, imgMultipart, description).collect { response ->
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.uploadStory(token, imgMultipart, description)
+                    .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                    .collect { response ->
                         response.onSuccess {
                             Toast.makeText(
                                 requireContext(),
@@ -196,7 +198,6 @@ class CreateStoryFragment : Fragment() {
                             showSnackbar(getString(R.string.post_failed))
                         }
                     }
-                }
             }
         } else {
             setLoadingState(false)

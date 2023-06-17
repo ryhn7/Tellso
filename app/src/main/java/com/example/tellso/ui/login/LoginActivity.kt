@@ -110,7 +110,7 @@ class LoginActivity : AppCompatActivity() {
 
     //    will close the app when back button is pressed
     override fun onBackPressed() {
-        super.onBackPressed()
+        super.onBackPressedDispatcher.onBackPressed()
         finishAffinity()
     }
 

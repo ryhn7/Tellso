@@ -19,7 +19,4 @@ class HomeViewModel @Inject constructor(
     suspend fun getAllStories(token: String): Flow<Result<StoriesResponse>> =
         storyRepo.getAllStories(token, null, null)
 
-    fun saveAuthToken(token: String) {
-        viewModelScope.launch { authRepo.saveAuthToken(token) }
-    }
 }

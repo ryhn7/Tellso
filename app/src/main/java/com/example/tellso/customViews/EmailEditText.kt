@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.util.Patterns
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.widget.doOnTextChanged
 import com.example.tellso.R
 
 class EmailEditText : AppCompatEditText {
@@ -37,17 +38,13 @@ class EmailEditText : AppCompatEditText {
         setAutofillHints(AUTOFILL_HINT_EMAIL_ADDRESS)
         setDrawable()
 
-        addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun afterTextChanged(p0: Editable?) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Email validation
-                // Display error automatically if the email is invalid
-                if (!s.isNullOrEmpty() && !Patterns.EMAIL_ADDRESS.matcher(s).matches())
-                    error = context.getString(R.string.et_email_error_message)
+        doOnTextChanged { text, _, _, _ ->
+            // Email validation
+            // Display error automatically if the email is invalid
+            if (!text.isNullOrEmpty() && !Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
+                error = context.getString(R.string.et_email_error_message)
             }
-        })
+        }
     }
 
     private fun setDrawable(

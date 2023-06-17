@@ -8,7 +8,9 @@ import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
+import android.util.Patterns
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.widget.doOnTextChanged
 import com.example.tellso.R
 
 class PasswordEditText : AppCompatEditText {
@@ -43,17 +45,12 @@ class PasswordEditText : AppCompatEditText {
         setAutofillHints(AUTOFILL_HINT_PASSWORD)
         setDrawable()
 
-        addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun afterTextChanged(p0: Editable?) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Password validation
-                // Display error automatically if the password doesn't meet certain criteria
-                if (!s.isNullOrEmpty() && s.length < 8)
-                    error = context.getString(R.string.et_password_error_message)
-            }
-        })
+        doOnTextChanged { text, _, _, _ ->
+            // Email validation
+            // Display error automatically if the email is invalid
+            if (!text.isNullOrEmpty() && text.length < 8)
+                error = context.getString(R.string.et_password_error_message)
+        }
     }
 
     private fun setDrawable(
