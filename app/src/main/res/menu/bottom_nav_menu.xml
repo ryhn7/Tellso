@@ -7,6 +7,11 @@
         android:title="@string/title_home" />
 
     <item
+        android:id="@+id/location"
+        android:icon="@drawable/ic_map_24"
+        android:title="@string/add_location" />
+
+    <item
         android:id="@+id/create_story"
         android:icon="@drawable/ic_add_box_24"
         android:title="@string/add_story" />

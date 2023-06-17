@@ -37,4 +37,10 @@
     <string name="post_success">Your story has been posted</string>
     <string name="post_failed">Your story failed to post</string>
     <string name="disable_btn">Passwords must be at least 8 characters</string>
+    <string name="add_location">Location</string>
+    <string name="activate_location_message">Please enable your location services</string>
+    <string name="normal_type">Normal</string>
+    <string name="satellite_type">Satellite</string>
+    <string name="terrain_type">Terrain</string>
+    <string name="hybrid_type">Hybrid</string>
 </resources>

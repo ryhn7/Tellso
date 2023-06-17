@@ -38,4 +38,10 @@
     <string name="post_success">Cerita Anda telah diposting</string>
     <string name="post_failed">Cerita Anda gagal diposting</string>
     <string name="disable_btn">Kata sandi minimal harus terdiri dari 8 karakter</string>
+    <string name="add_location">Lokasi</string>
+    <string name="activate_location_message">Silakan aktifkan layanan lokasi Anda</string>
+    <string name="normal_type">Normal</string>
+    <string name="satellite_type">Satelit</string>
+    <string name="terrain_type">Terrain</string>
+    <string name="hybrid_type">Hybrid</string>
 </resources>

@@ -14,6 +14,12 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/location"
+        android:name="com.example.tellso.ui.location.LocationFragment"
+        android:label="@string/add_location"
+        tools:layout="@layout/fragment_location" />
+
+    <fragment
         android:id="@+id/create_story"
         android:name="com.example.tellso.ui.create.CreateStoryFragment"
         android:label="@string/create_story"
