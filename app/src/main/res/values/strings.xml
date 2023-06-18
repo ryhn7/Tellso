@@ -45,4 +45,7 @@
     <string name="hybrid_type">Hybrid</string>
     <string name="retry">Retry</string>
     <string name="loading_error_message">Couldn\'t fetch data</string>
+    <string name="add_location_story">Add location</string>
+    <string name="location_permission_denied">Location permission not allowed</string>
+    <string name="denied_action">Change setting</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.example.tellso.ui.create
 
+import android.Manifest
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -8,12 +10,15 @@ import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
@@ -29,6 +34,8 @@ import com.example.tellso.databinding.FragmentCreateStoryBinding
 import com.example.tellso.utils.animateVisibility
 import com.example.tellso.utils.reduceFileImage
 import com.example.tellso.utils.uriToFile
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -47,6 +54,7 @@ class CreateStoryFragment : Fragment() {
 
     private var _binding: FragmentCreateStoryBinding? = null
     private lateinit var currentPhotoPath: String
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private var getFile: File? = null
     private var location: Location? = null
@@ -140,6 +148,8 @@ class CreateStoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+
         lifecycleScope.launchWhenCreated {
             launch {
                 viewModel.getAuthToken().collect { authToken ->
@@ -151,6 +161,13 @@ class CreateStoryFragment : Fragment() {
         binding.cameraButton.setOnClickListener { startIntentCamera() }
         binding.galerryButton.setOnClickListener { startIntentGallery() }
         binding.postButton.setOnClickListener { uploadStory() }
+        binding.switchAddLocation.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                getLocation()
+            } else {
+                location = null
+            }
+        }
     }
 
     private fun uploadStory() {
@@ -240,6 +257,72 @@ class CreateStoryFragment : Fragment() {
             currentPhotoPath = it.absolutePath
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
             launcherIntentCamera.launch(intent)
+        }
+    }
+
+    private fun getLocation() {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            // Location permission granted
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    this.location = location
+                    Log.d(TAG, "getLocation: ${location.latitude}, ${location.longitude}")
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.activate_location_message),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    binding.switchAddLocation.isChecked = false
+                }
+            }
+        } else {
+            // Location permission denied
+            requestPermissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
+        }
+    }
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        Log.d(TAG, "$permissions")
+        when {
+            permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false -> {
+                getLocation()
+            }
+            else -> {
+                Snackbar
+                    .make(
+                        binding.root,
+                        getString(R.string.location_permission_denied),
+                        Snackbar.LENGTH_SHORT
+                    )
+                    .setActionTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                    .setAction(getString(R.string.denied_action)) {
+
+                        // When user not grant permission, user need to activate the permission manually
+                        // Direct user to the application detail setting
+                        Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).also { intent ->
+                            val uri = Uri.fromParts("package", requireContext().packageName, null)
+                            intent.data = uri
+
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(intent)
+                        }
+                    }
+                    .show()
+
+                binding.switchAddLocation.isChecked = false
+            }
         }
     }
 

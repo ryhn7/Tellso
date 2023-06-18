@@ -9,7 +9,6 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tellso.data.local.entity.Story
 import com.example.tellso.databinding.StoryItemBinding
@@ -66,7 +65,7 @@ class StoriesResponseAdapter :
 
 
     companion object {
-        private val StoryDiffCallback = object : DiffUtil.ItemCallback<Story>() {
+         val StoryDiffCallback = object : DiffUtil.ItemCallback<Story>() {
             override fun areItemsTheSame(oldItem: Story, newItem: Story): Boolean {
                 return oldItem.id == newItem.id
             }

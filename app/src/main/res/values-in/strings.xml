@@ -46,4 +46,7 @@
     <string name="hybrid_type">Hybrid</string>
     <string name="retry">Muat ulang</string>
     <string name="loading_error_message">Tidak bisa mengambil data</string>
+    <string name="add_location_story">Tambah Lokasi</string>
+    <string name="location_permission_denied">Izin lokasi tidak diberikan</string>
+    <string name="denied_action">Ubah pengaturan</string>
 </resources>

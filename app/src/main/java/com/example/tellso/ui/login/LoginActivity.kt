@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.ExperimentalPagingApi
 import com.example.tellso.R
 import com.example.tellso.databinding.ActivityLoginBinding
 import com.example.tellso.ui.main.MainActivity
@@ -19,6 +20,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 
+@ExperimentalPagingApi
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private var _binding: ActivityLoginBinding? = null

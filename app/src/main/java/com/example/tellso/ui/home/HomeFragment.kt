@@ -4,14 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.paging.PagingData
@@ -21,11 +17,9 @@ import com.example.tellso.R
 import com.example.tellso.adapter.LoadingStateAdapter
 import com.example.tellso.adapter.StoriesResponseAdapter
 import com.example.tellso.data.local.entity.Story
-import com.example.tellso.data.remote.response.StoryItem
 import com.example.tellso.databinding.FragmentHomeBinding
 import com.example.tellso.utils.animateVisibility
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 @ExperimentalPagingApi
@@ -125,9 +119,7 @@ class HomeFragment : Fragment() {
 
         binding.swipeRefresh.setOnRefreshListener {
             getAllStories()
-            binding.viewLoading.animateVisibility(false)
         }
-
     }
 
     private fun updateRecyclerViewData(stories: PagingData<Story>) {
