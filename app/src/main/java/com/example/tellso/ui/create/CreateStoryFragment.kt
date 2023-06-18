@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -21,6 +22,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.ExperimentalPagingApi
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils
 import com.example.tellso.R
 import com.example.tellso.databinding.FragmentCreateStoryBinding
@@ -32,12 +34,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
 
+@ExperimentalPagingApi
 @AndroidEntryPoint
 class CreateStoryFragment : Fragment() {
 
@@ -45,6 +49,7 @@ class CreateStoryFragment : Fragment() {
     private lateinit var currentPhotoPath: String
 
     private var getFile: File? = null
+    private var location: Location? = null
     private var token: String = ""
 
     private val viewModel: CreateStoryViewModel by viewModels()
@@ -178,8 +183,18 @@ class CreateStoryFragment : Fragment() {
                 reqImgFile
             )
 
+            var lat: RequestBody? = null
+            var lon: RequestBody? = null
+
+            if (location != null) {
+                lat =
+                    location?.latitude.toString().toRequestBody("text/plain".toMediaType())
+                lon =
+                    location?.longitude.toString().toRequestBody("text/plain".toMediaType())
+            }
+
             viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.uploadStory(token, imgMultipart, description)
+                viewModel.uploadStory(token, imgMultipart, description, lat, lon)
                     .flowWithLifecycle(viewLifecycleOwner.lifecycle)
                     .collect { response ->
                         response.onSuccess {

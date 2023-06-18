@@ -44,4 +44,6 @@
     <string name="satellite_type">Satelit</string>
     <string name="terrain_type">Terrain</string>
     <string name="hybrid_type">Hybrid</string>
+    <string name="retry">Muat ulang</string>
+    <string name="loading_error_message">Tidak bisa mengambil data</string>
 </resources>

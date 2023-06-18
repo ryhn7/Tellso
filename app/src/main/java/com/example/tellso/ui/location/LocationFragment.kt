@@ -11,7 +11,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.ExperimentalPagingApi
 import com.example.tellso.R
+import com.example.tellso.databinding.FragmentLocationBinding
+import com.example.tellso.ui.main.MainActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 
@@ -22,11 +27,21 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@ExperimentalPagingApi
+@AndroidEntryPoint
 class LocationFragment : Fragment() {
+
+    private var _binding: FragmentLocationBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    private var token: String = ""
+    private val viewModel: LocationVM by viewModels()
 
     private val callback = OnMapReadyCallback { googleMap ->
         /**
@@ -46,6 +61,7 @@ class LocationFragment : Fragment() {
         }
         getDeviceLocation()
         setMapStyle()
+        storyLocation()
     }
 
     override fun onCreateView(
@@ -60,6 +76,8 @@ class LocationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+
+        token = requireActivity().intent.getStringExtra(MainActivity.EXTRA_TOKEN) ?: ""
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
     }
@@ -76,7 +94,11 @@ class LocationFragment : Fragment() {
                     val latLng = LatLng(location.latitude, location.longitude)
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 8f))
                 } else {
-                    Toast.makeText(requireContext(), getString(R.string.activate_location_message), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.activate_location_message),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -85,6 +107,31 @@ class LocationFragment : Fragment() {
         }
     }
 
+    private fun storyLocation() {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            launch {
+                viewModel.getAllStories(token).collect { result ->
+                    result.onSuccess { response ->
+                        response.stories.forEach { story ->
+
+                            // Verify that latitude and longitude field not null
+                            // Create marker on the map
+                            if (story.lat != null && story.lon != null) {
+                                val latLng = LatLng(story.lat, story.lon)
+
+                                mMap.addMarker(
+                                    MarkerOptions()
+                                        .position(latLng)
+                                        .title(story.name)
+                                        .snippet("Lat: ${story.lat}, Lon: ${story.lon}")
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 
     private fun setMapStyle() {

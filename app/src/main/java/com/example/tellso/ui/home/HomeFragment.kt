@@ -12,17 +12,23 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tellso.R
+import com.example.tellso.adapter.LoadingStateAdapter
 import com.example.tellso.adapter.StoriesResponseAdapter
-import com.example.tellso.data.remote.response.Story
+import com.example.tellso.data.local.entity.Story
+import com.example.tellso.data.remote.response.StoryItem
 import com.example.tellso.databinding.FragmentHomeBinding
 import com.example.tellso.utils.animateVisibility
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
+@ExperimentalPagingApi
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -65,50 +71,45 @@ class HomeFragment : Fragment() {
     }
 
     private fun getAllStories() {
-        binding.viewLoading.animateVisibility(true)
-        binding.swipeRefresh.isRefreshing = true
-
-        lifecycleScope.launch {
-
-            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-
-                viewModel.getAllStories(token).collect { result ->
-                    result.onSuccess { response ->
-                        updateRecyclerViewData(response.stories)
-
-                        binding.apply {
-                            tvNotFound.animateVisibility(response.stories.isEmpty())
-                            ivNotFound.animateVisibility(response.stories.isEmpty())
-                            rvStories.animateVisibility(response.stories.isNotEmpty())
-                            viewLoading.animateVisibility(false)
-                            swipeRefresh.isRefreshing = false
-                        }
-                    }
-
-                    result.onFailure {
-                        Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-
-                        binding.apply {
-                            tvNotFound.animateVisibility(true)
-                            ivNotFound.animateVisibility(true)
-                            rvStories.animateVisibility(false)
-                            viewLoading.animateVisibility(false)
-                            swipeRefresh.isRefreshing = false
-                        }
-                    }
-                }
-            }
+        viewModel.getAllStories(token).observe(viewLifecycleOwner) { result ->
+            updateRecyclerViewData(result)
         }
-
     }
 
+
     private fun setRecyclerView() {
-        val linearLayoutManager = LinearLayoutManager(context)
+        val linearLayoutManager = LinearLayoutManager(requireContext())
         listAdapter = StoriesResponseAdapter()
 
-        recyclerView = binding.rvStories.apply {
-            layoutManager = linearLayoutManager
-            adapter = listAdapter
+        listAdapter.addLoadStateListener { loadState ->
+            if ((loadState.source.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && listAdapter.itemCount < 1) || loadState.source.refresh is LoadState.Error) {
+                binding.apply {
+                    ivNotFound.animateVisibility(true)
+                    tvNotFound.animateVisibility(true)
+                    rvStories.animateVisibility(false)
+                }
+            } else {
+                binding.apply {
+                    ivNotFound.animateVisibility(false)
+                    tvNotFound.animateVisibility(false)
+                    rvStories.animateVisibility(true)
+                }
+            }
+            binding.swipeRefresh.isRefreshing = loadState.source.refresh is LoadState.Loading
+        }
+
+        try {
+            recyclerView = binding.rvStories
+            recyclerView.apply {
+                adapter = listAdapter.withLoadStateFooter(
+                    footer = LoadingStateAdapter {
+                        listAdapter.retry()
+                    }
+                )
+                layoutManager = linearLayoutManager
+            }
+        } catch (e: NullPointerException) {
+            e.printStackTrace()
         }
 
     }
@@ -129,9 +130,9 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun updateRecyclerViewData(stories: List<Story>) {
+    private fun updateRecyclerViewData(stories: PagingData<Story>) {
         val recyclerViewState = recyclerView.layoutManager?.onSaveInstanceState()
-        listAdapter.submitList(stories)
+        listAdapter.submitData(lifecycle, stories)
         recyclerView.layoutManager?.onRestoreInstanceState(recyclerViewState)
     }
 

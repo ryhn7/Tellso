@@ -9,7 +9,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.tellso.R
-import com.example.tellso.data.remote.response.Story
+import com.example.tellso.data.local.entity.Story
 import com.example.tellso.databinding.ActivityDetailStoryBinding
 import com.example.tellso.utils.setDateFormat
 

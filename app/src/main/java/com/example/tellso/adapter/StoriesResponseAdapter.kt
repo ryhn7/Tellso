@@ -7,10 +7,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tellso.data.remote.response.Story
+import com.example.tellso.data.local.entity.Story
 import com.example.tellso.databinding.StoryItemBinding
 import com.example.tellso.ui.detail.DetailStoryActivity
 import com.example.tellso.ui.detail.DetailStoryActivity.Companion.EXTRA_DETAIL
@@ -19,7 +20,7 @@ import com.example.tellso.utils.setImageFromUrl
 import dagger.hilt.android.internal.managers.FragmentComponentManager
 
 class StoriesResponseAdapter :
-    ListAdapter<Story, StoriesResponseAdapter.ViewHolder>(StoryDiffCallback) {
+    PagingDataAdapter<Story, StoriesResponseAdapter.ViewHolder>(StoryDiffCallback) {
 
     class ViewHolder(private val binding: StoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -58,7 +59,9 @@ class StoriesResponseAdapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val story = getItem(position)
-        holder.bind(holder.itemView.context, story)
+        if (story != null) {
+            holder.bind(holder.itemView.context, story)
+        }
     }
 
 
