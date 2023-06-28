@@ -102,7 +102,6 @@ class LoginActivity : AppCompatActivity() {
                 is ResultState.Loading -> {
                     setLoadingState(true)
                 }
-                else -> {}
             }
         }
     }
