@@ -1,17 +1,15 @@
 package com.example.tellso.data
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.example.tellso.data.local.entity.Story
 import com.example.tellso.data.local.room.StoryDatabase
 import com.example.tellso.data.remote.StoryRemoteMediator
 import com.example.tellso.data.remote.response.FileUploadResponse
 import com.example.tellso.data.remote.response.StoriesResponse
 import com.example.tellso.data.remote.retrofit.ApiService
+import com.example.tellso.domain.entity.Story
 import com.example.tellso.domain.interfaces.IStoryRepo
 import com.example.tellso.utils.wrapEspressoIdlingResource
 import kotlinx.coroutines.Dispatchers

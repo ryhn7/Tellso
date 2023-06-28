@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tellso.R
 import com.example.tellso.adapter.LoadingStateAdapter
 import com.example.tellso.adapter.StoriesResponseAdapter
-import com.example.tellso.data.local.entity.Story
 import com.example.tellso.databinding.FragmentHomeBinding
+import com.example.tellso.domain.entity.Story
 import com.example.tellso.utils.animateVisibility
 import dagger.hilt.android.AndroidEntryPoint
 

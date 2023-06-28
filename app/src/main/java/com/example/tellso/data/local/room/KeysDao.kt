@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.tellso.data.local.entity.Keys
+import com.example.tellso.domain.entity.Keys
 
 @Dao
 interface KeysDao {

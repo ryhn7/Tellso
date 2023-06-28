@@ -38,11 +38,11 @@ class AuthRepoImpl @Inject constructor(
         }
     }
 
-    suspend fun saveAuthToken(token: String) {
+    override suspend fun saveAuthToken(token: String) {
         authPreferences.saveAuthToken(token)
     }
 
-    fun getAuthToken(): Flow<String?> {
+    override fun getAuthToken(): Flow<String?> {
         return authPreferences.getAuthToken()
     }
 }

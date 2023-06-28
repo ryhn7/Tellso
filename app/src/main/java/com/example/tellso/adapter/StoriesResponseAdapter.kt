@@ -10,8 +10,8 @@ import androidx.core.util.Pair
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tellso.data.local.entity.Story
 import com.example.tellso.databinding.StoryItemBinding
+import com.example.tellso.domain.entity.Story
 import com.example.tellso.ui.detail.DetailStoryActivity
 import com.example.tellso.ui.detail.DetailStoryActivity.Companion.EXTRA_DETAIL
 import com.example.tellso.utils.setDateFormat

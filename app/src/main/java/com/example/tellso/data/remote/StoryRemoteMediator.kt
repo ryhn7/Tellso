@@ -5,10 +5,10 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.example.tellso.data.local.entity.Keys
-import com.example.tellso.data.local.entity.Story
 import com.example.tellso.data.local.room.StoryDatabase
 import com.example.tellso.data.remote.retrofit.ApiService
+import com.example.tellso.domain.entity.Keys
+import com.example.tellso.domain.entity.Story
 import com.example.tellso.utils.wrapEspressoIdlingResource
 
 @ExperimentalPagingApi
@@ -68,7 +68,6 @@ class StoryRemoteMediator(
                             storyResponseItem.lat
                         )
 
-                        // Save Story to the local database
                         db.storyDao().insertStory(story)
                     }
                 }

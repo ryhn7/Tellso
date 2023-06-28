@@ -1,7 +1,9 @@
 package com.example.tellso.utils
 
-import com.example.tellso.data.local.entity.Story
-import com.example.tellso.data.remote.response.*
+import com.example.tellso.data.remote.response.FileUploadResponse
+import com.example.tellso.data.remote.response.StoriesResponse
+import com.example.tellso.data.remote.response.StoryItem
+import com.example.tellso.domain.entity.Story
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -48,28 +50,6 @@ object DataDummy {
         }
 
         return items
-    }
-
-
-    fun generateDummyLoginResponse(): LoginResponse {
-        val loginResult = LoginResult(
-            userId = "user-yj5pc_LARC_AgK61",
-            name = "Arif Faizin",
-            token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLXlqNXBjX0xBUkNfQWdLNjEiLCJpYXQiOjE2NDE3OTk5NDl9.flEMaQ7zsdYkxuyGbiXjEDXO8kuDTcI__3UjCwt6R_I"
-        )
-
-        return LoginResponse(
-            loginResult = loginResult,
-            error = false,
-            message = "success"
-        )
-    }
-
-    fun generateDummyRegisterResponse(): RegisterResponse {
-        return RegisterResponse(
-            error = false,
-            message = "success"
-        )
     }
 
     fun generateDummyMultipartFile(): MultipartBody.Part {

@@ -11,4 +11,6 @@ interface IAuthRepo {
         password: String
     ): Flow<Result<RegisterResponse>>
     suspend fun userLogin(email: String, password: String): Flow<Result<LoginResponse>>
+    suspend fun saveAuthToken(token: String)
+    fun getAuthToken(): Flow<String?>
 }

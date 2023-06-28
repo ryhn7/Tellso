@@ -8,7 +8,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.tellso.data.StoryRepoImpl
-import com.example.tellso.data.local.entity.Story
+import com.example.tellso.domain.entity.Story
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.tellso.data.local.entity.Story
+import com.example.tellso.domain.entity.Story
 
 @Dao
 interface StoryDao {

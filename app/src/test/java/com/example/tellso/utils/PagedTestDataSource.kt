@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.tellso.data.local.entity.Story
+import com.example.tellso.domain.entity.Story
 
 class PagedTestDataSource :
     PagingSource<Int, LiveData<List<Story>>>() {

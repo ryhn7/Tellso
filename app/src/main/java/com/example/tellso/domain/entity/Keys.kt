@@ -1,4 +1,4 @@
-package com.example.tellso.data.local.entity
+package com.example.tellso.domain.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

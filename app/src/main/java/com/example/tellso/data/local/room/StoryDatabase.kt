@@ -2,8 +2,8 @@ package com.example.tellso.data.local.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.tellso.data.local.entity.Keys
-import com.example.tellso.data.local.entity.Story
+import com.example.tellso.domain.entity.Keys
+import com.example.tellso.domain.entity.Story
 
 @Database(
     entities = [Story::class, Keys::class],

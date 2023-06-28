@@ -1,9 +1,9 @@
 package com.example.tellso.domain.interfaces
 
 import androidx.paging.PagingData
-import com.example.tellso.data.local.entity.Story
 import com.example.tellso.data.remote.response.FileUploadResponse
 import com.example.tellso.data.remote.response.StoriesResponse
+import com.example.tellso.domain.entity.Story
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

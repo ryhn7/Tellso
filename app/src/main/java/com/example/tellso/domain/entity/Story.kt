@@ -1,4 +1,4 @@
-package com.example.tellso.data.local.entity
+package com.example.tellso.domain.entity
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo

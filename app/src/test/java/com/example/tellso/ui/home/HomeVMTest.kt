@@ -7,7 +7,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.ListUpdateCallback
 import com.example.tellso.adapter.StoriesResponseAdapter
-import com.example.tellso.data.local.entity.Story
+import com.example.tellso.domain.entity.Story
 import com.example.tellso.utils.CoroutinesTestRule
 import com.example.tellso.utils.DataDummy
 import com.example.tellso.utils.PagedTestDataSource

@@ -113,8 +113,6 @@ class LocationFragment : Fragment() {
                     result.onSuccess { response ->
                         response.stories.forEach { story ->
 
-                            // Verify that latitude and longitude field not null
-                            // Create marker on the map
                             if (story.lat != null && story.lon != null) {
                                 val latLng = LatLng(story.lat, story.lon)
 
