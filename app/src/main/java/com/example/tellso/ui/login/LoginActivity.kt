@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
 import com.example.tellso.R
+import com.example.tellso.common.ResultState
 import com.example.tellso.databinding.ActivityLoginBinding
 import com.example.tellso.ui.main.MainActivity
 import com.example.tellso.ui.register.RegisterActivity
@@ -17,7 +18,6 @@ import com.example.tellso.utils.animateVisibility
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 
 @ExperimentalPagingApi
@@ -27,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
     private val binding get() = _binding!!
 
     private val viewModel: LoginVM by viewModels()
-    private var loginJob: Job = Job()
+    private var loginJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +36,14 @@ class LoginActivity : AppCompatActivity() {
 
         setActions()
         binding.passwordEditText.addTextChangedListener(passwordWatcher)
+
+        observeLoginResult()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+        loginJob?.cancel()
     }
 
     private fun setActions() {
@@ -56,42 +64,45 @@ class LoginActivity : AppCompatActivity() {
         val password = binding.passwordEditText.text.toString()
         setLoadingState(true)
 
-        lifecycleScope.launchWhenResumed {
-            if (loginJob.isActive) {
-                loginJob.cancelChildren()
-            }
+        loginJob?.cancel()
 
-            loginJob = launch {
-                viewModel.userLogin(email, password).collect() { result ->
-                    result.onSuccess { credentials ->
+        loginJob = lifecycleScope.launch {
+            viewModel.login(email, password)
+        }
+    }
 
-                        credentials.loginResult.token.let { token ->
-                            viewModel.saveAuthToken(token)
-                            Intent(this@LoginActivity, MainActivity::class.java).also { intent ->
-                                intent.putExtra(MainActivity.EXTRA_TOKEN, token)
-                                startActivity(intent)
-                                finish()
-                            }
-                        }
+    private fun observeLoginResult() {
+        viewModel.loginResult.observe(this) { result ->
+            when (result) {
+                is ResultState.Success -> {
+                    val loginResponse = result.data
+                    val token = loginResponse.loginResult.token
+                    viewModel.saveAuthToken(token)
 
-                        Toast.makeText(
-                            this@LoginActivity,
-                            getString(R.string.login_success),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                    Intent(this@LoginActivity, MainActivity::class.java).also { intent ->
+                        intent.putExtra(MainActivity.EXTRA_TOKEN, token)
+                        startActivity(intent)
+                        finish()
                     }
 
-                    result.onFailure {
-                        Snackbar.make(
-                            binding.root,
-                            getString(R.string.error_message),
-                            Snackbar.LENGTH_SHORT
-                        )
-                            .show()
-                        setLoadingState(false)
-                    }
-
+                    Toast.makeText(
+                        this@LoginActivity,
+                        getString(R.string.login_success),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+                is ResultState.Error -> {
+                    Snackbar.make(
+                        binding.root,
+                        getString(R.string.error_message),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                    setLoadingState(false)
+                }
+                is ResultState.Loading -> {
+                    setLoadingState(true)
+                }
+                else -> {}
             }
         }
     }

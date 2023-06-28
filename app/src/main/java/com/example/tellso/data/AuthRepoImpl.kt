@@ -6,36 +6,30 @@ import com.example.tellso.data.remote.response.RegisterResponse
 import com.example.tellso.data.remote.retrofit.ApiService
 import com.example.tellso.domain.interfaces.IAuthRepo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class AuthRepoImpl @Inject constructor(
     private val authPreferences: AuthPreferences,
     private val apiService: ApiService
-): IAuthRepo {
+) : IAuthRepo {
     override suspend fun userRegister(
         name: String,
         email: String,
         password: String
     ): Flow<Result<RegisterResponse>> = flow {
-        try {
-            val registerResponse = apiService.userRegister(name, email, password)
-            emit(Result.success(registerResponse))
-        } catch (e: Exception) {
-            e.printStackTrace()
-            emit(Result.failure(e))
-        }
-
+        val registerResponse = apiService.userRegister(name, email, password)
+        emit(Result.success(registerResponse))
+    }.catch { e ->
+        throw e
     }
 
     override suspend fun userLogin(email: String, password: String): Flow<Result<LoginResponse>> = flow {
-        try {
-            val userResponse = apiService.userLogin(email, password)
-            emit(Result.success(userResponse))
-        } catch (e: Exception) {
-            e.printStackTrace()
-            emit(Result.failure(e))
-        }
+        val userResponse = apiService.userLogin(email, password)
+        emit(Result.success(userResponse))
+    }.catch { e ->
+        throw e
     }
 
     override suspend fun saveAuthToken(token: String) {
