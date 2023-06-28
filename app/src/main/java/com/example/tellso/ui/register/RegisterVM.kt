@@ -1,13 +1,13 @@
 package com.example.tellso.ui.register
 
 import androidx.lifecycle.ViewModel
-import com.example.tellso.data.AuthRepo
+import com.example.tellso.data.AuthRepoImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class RegisterVM @Inject constructor(
-    private val authRepo: AuthRepo
+    private val authRepo: AuthRepoImpl
 ) : ViewModel() {
 
     suspend fun userRegister(name: String, email: String, password: String) =

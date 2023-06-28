@@ -37,9 +37,9 @@ class StoryRepoTest {
     private lateinit var apiService: ApiService
 
     @Mock
-    private lateinit var storyRepositoryMock: StoryRepo
+    private lateinit var storyRepositoryMock: StoryRepoImpl
 
-    private lateinit var storyRepository: StoryRepo
+    private lateinit var storyRepository: StoryRepoImpl
 
     private val dummyToken = "authentication_token"
     private val dummyMultipart = DataDummy.generateDummyMultipartFile()
@@ -48,7 +48,7 @@ class StoryRepoTest {
 
     @Before
     fun setup() {
-        storyRepository = StoryRepo( apiService, storyDatabase)
+        storyRepository = StoryRepoImpl( apiService, storyDatabase)
     }
 
     @Test

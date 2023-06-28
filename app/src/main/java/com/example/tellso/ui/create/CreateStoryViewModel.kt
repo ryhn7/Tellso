@@ -2,8 +2,8 @@ package com.example.tellso.ui.create
 
 import androidx.lifecycle.ViewModel
 import androidx.paging.ExperimentalPagingApi
-import com.example.tellso.data.AuthRepo
-import com.example.tellso.data.StoryRepo
+import com.example.tellso.data.AuthRepoImpl
+import com.example.tellso.data.StoryRepoImpl
 import com.example.tellso.data.remote.response.FileUploadResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -14,8 +14,8 @@ import javax.inject.Inject
 @ExperimentalPagingApi
 @HiltViewModel
 class CreateStoryViewModel @Inject constructor(
-    private val authRepo: AuthRepo,
-    private val storyRepo: StoryRepo
+    private val authRepo: AuthRepoImpl,
+    private val storyRepoImpl: StoryRepoImpl
 ) : ViewModel() {
 
     fun getAuthToken(): Flow<String?> = authRepo.getAuthToken()
@@ -27,5 +27,5 @@ class CreateStoryViewModel @Inject constructor(
         lat: RequestBody?,
         lon: RequestBody?
     ): Flow<Result<FileUploadResponse>> =
-        storyRepo.uploadStory(token, file, description, lat, lon)
+        storyRepoImpl.uploadStory(token, file, description, lat, lon)
 }

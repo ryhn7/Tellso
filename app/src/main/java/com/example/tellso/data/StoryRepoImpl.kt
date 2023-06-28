@@ -1,5 +1,7 @@
 package com.example.tellso.data
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -10,68 +12,78 @@ import com.example.tellso.data.remote.StoryRemoteMediator
 import com.example.tellso.data.remote.response.FileUploadResponse
 import com.example.tellso.data.remote.response.StoriesResponse
 import com.example.tellso.data.remote.retrofit.ApiService
+import com.example.tellso.domain.interfaces.IStoryRepo
 import com.example.tellso.utils.wrapEspressoIdlingResource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject
 
 @ExperimentalPagingApi
-class StoryRepo @Inject constructor(
+class StoryRepoImpl @Inject constructor(
     private val apiService: ApiService,
     private val storyDatabase: StoryDatabase,
-) {
+) : IStoryRepo {
 
-    fun getAllStories(
-        token: String,
-    ): Flow<PagingData<Story>> {
+    override fun getAllStories(token: String): Flow<PagingData<Story>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 10,
             ),
-            remoteMediator = StoryRemoteMediator(
-                apiService,
-                storyDatabase,
-                generateToken(token)
-            ),
+            remoteMediator = StoryRemoteMediator(apiService, storyDatabase, generateToken(token)),
             pagingSourceFactory = {
                 storyDatabase.storyDao().getAllStories()
             }
+
         ).flow
     }
 
-    fun getAllStoriesWithLocation(token: String): Flow<Result<StoriesResponse>> = flow {
+    override fun getAllStoriesWithLocation(token: String): Flow<Result<StoriesResponse>> = flow {
         wrapEspressoIdlingResource {
             try {
                 val bearerToken = generateToken(token)
-                val response = apiService.getAllStories(bearerToken, size = 30, location = 1)
-                emit(Result.success(response))
+                val storiesResponse = apiService.getAllStories(bearerToken, size = 30, location = 1)
+                emit(Result.success(storiesResponse))
             } catch (e: Exception) {
                 e.printStackTrace()
                 emit(Result.failure(e))
             }
         }
+
     }
 
-    suspend fun uploadStory(
+
+    override suspend fun uploadStory(
         token: String,
         file: MultipartBody.Part,
         description: RequestBody,
         lat: RequestBody?,
         lon: RequestBody?,
-    ): Flow<Result<FileUploadResponse>> = flow {
-        try {
-            val bearerToken = generateToken(token)
-            val response = apiService.uploadStory(bearerToken, file, description, lat, lon)
-            emit(Result.success(response))
-        } catch (e: Exception) {
-            e.printStackTrace()
-            emit(Result.failure(e))
+    ): Flow<Result<FileUploadResponse>> = withContext(Dispatchers.IO) {
+        flow {
+            try {
+                // Make the network call or perform any necessary operations
+                val fileUploadResponse = apiService.uploadStory(
+                    generateToken(token),
+                    file,
+                    description,
+                    lat,
+                    lon
+                )
+
+                // Emit the success result
+                emit(Result.success(fileUploadResponse))
+            } catch (e: Exception) {
+                // Emit the error result
+                emit(Result.failure(e))
+            }
         }
     }
 
-    private fun generateToken(token: String): String {
+    override fun generateToken(token: String): String {
         return "Bearer $token"
     }
 }
