@@ -7,8 +7,8 @@ import com.example.tellso.adapter.StoriesResponseAdapter
 import com.example.tellso.data.local.room.StoryDatabase
 import com.example.tellso.data.remote.response.StoriesResponse
 import com.example.tellso.data.remote.retrofit.ApiService
-import com.example.tellso.utils.CoroutinesTestRule
 import com.example.tellso.utils.DataDummy
+import com.example.tellso.utils.MainDispatcherRule
 import com.example.tellso.utils.PagedTestDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -28,7 +28,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class StoryRepoTest {
 
     @get:Rule
-    var coroutinesTestRule = CoroutinesTestRule()
+    val mainDispatcherRules = MainDispatcherRule()
 
     @Mock
     private lateinit var storyDatabase: StoryDatabase
@@ -64,8 +64,8 @@ class StoryRepoTest {
             val differ = AsyncPagingDataDiffer(
                 diffCallback = StoriesResponseAdapter.StoryDiffCallback,
                 updateCallback = noopListUpdateCallback,
-                mainDispatcher = coroutinesTestRule.testDispatcher,
-                workerDispatcher = coroutinesTestRule.testDispatcher
+                mainDispatcher = mainDispatcherRules.testDispatcher,
+                workerDispatcher = mainDispatcherRules.testDispatcher
             )
             differ.submitData(actualResult)
 
