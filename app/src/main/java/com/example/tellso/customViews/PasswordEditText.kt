@@ -29,7 +29,7 @@ class PasswordEditText : AppCompatEditText {
         init()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         transformationMethod = PasswordTransformationMethod.getInstance()
     }
